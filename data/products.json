@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "image": "images/product-3.png",
+    "title": "Nordic Chair",
+    "price": 50.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 2,
+    "image": "images/product-1.png",
+    "title": "Nordic Chair",
+    "price": 50.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 3,
+    "image": "images/product-2.png",
+    "title": "Kruzo Aero Chair",
+    "price": 78.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 4,
+    "image": "images/product-3.png",
+    "title": "Ergonomic Chair",
+    "price": 43.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 5,
+    "image": "images/product-1.png",
+    "title": "Modern Lounge Chair",
+    "price": 62.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 6,
+    "image": "images/product-2.png",
+    "title": "Compact Accent Chair",
+    "price": 58.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 7,
+    "image": "images/product-3.png",
+    "title": "Scandi Wooden Chair",
+    "price": 54.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 8,
+    "image": "images/product-1.png",
+    "title": "Soft Fabric Chair",
+    "price": 69.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 9,
+    "image": "images/product-2.png",
+    "title": "Minimal Armchair",
+    "price": 74.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 10,
+    "image": "images/product-3.png",
+    "title": "Executive Desk Chair",
+    "price": 89.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 11,
+    "image": "images/product-1.png",
+    "title": "Oak Reading Chair",
+    "price": 47.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 12,
+    "image": "images/product-2.png",
+    "title": "Relax Recliner",
+    "price": 96.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 13,
+    "image": "images/product-3.png",
+    "title": "Studio Side Chair",
+    "price": 41.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 14,
+    "image": "images/product-1.png",
+    "title": "Contemporary Chair",
+    "price": 73.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 15,
+    "image": "images/product-2.png",
+    "title": "Heritage Lounge Chair",
+    "price": 84.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 16,
+    "image": "images/product-3.png",
+    "title": "Cushioned Dining Chair",
+    "price": 38.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 17,
+    "image": "images/product-1.png",
+    "title": "Aero Mesh Chair",
+    "price": 81.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 18,
+    "image": "images/product-2.png",
+    "title": "Everyday Task Chair",
+    "price": 59.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 19,
+    "image": "images/product-3.png",
+    "title": "Classic Upholstered Chair",
+    "price": 67.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  },
+  {
+    "id": 20,
+    "image": "images/product-1.png",
+    "title": "Premium Comfort Chair",
+    "price": 92.0,
+    "href": "#",
+    "crossIcon": "images/cross.svg"
+  }
+]
