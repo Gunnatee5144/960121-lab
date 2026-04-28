@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Development Structures - HTML, CSS, & Bootstrap</title>
+    <meta name="description" content="A comprehensive guide to HTML, CSS, and Bootstrap structures with code examples and detailed explanations.">
+    <link rel="stylesheet" href="explanation.css">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <header>
+        <h1>Web Structures</h1>
+        <p class="subtitle">Mastering the foundation of modern web design: HTML, CSS, and Bootstrap.</p>
+    </header>
+
+    <main class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 45%;">Code Snippet</th>
+                    <th style="width: 55%;">Description & Explanation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- HTML SECTION -->
+                <tr>
+                    <td colspan="2" class="section-divider">HTML STRUCTURES</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="code-snippet">
+                            <span class="tag">&lt;!DOCTYPE html&gt;</span><br>
+                            <span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="val">"en"</span><span class="tag">&gt;</span><br>
+                            &nbsp;&nbsp;<span class="tag">&lt;head&gt;</span>...<span class="tag">&lt;/head&gt;</span><br>
+                            &nbsp;&nbsp;<span class="tag">&lt;body&gt;</span>...<span class="tag">&lt;/body&gt;</span><br>
+                            <span class="tag">&lt;/html&gt;</span>
+                        </div>
+                    </td>
+                    <td class="description">
+                        <strong>Standard Document Skeleton:</strong> The fundamental structure of every HTML page. The <code>DOCTYPE</code> tells the browser we are using HTML5, while <code>html</code>, <code>head</code>, and <code>body</code> define the root, metadata, and visible content respectively.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="code-snippet">
+                            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"container"</span><span class="tag">&gt;</span><br>
+                            &nbsp;&nbsp;<span class="tag">&lt;h1&gt;</span>Title<span class="tag">&lt;/h1&gt;</span><br>
+                            &nbsp;&nbsp;<span class="tag">&lt;p&gt;</span>Content...<span class="tag">&lt;/p&gt;</span><br>
+                            <span class="tag">&lt;/div&gt;</span>
+                        </div>
+                    </td>
+                    <td class="description">
+                        <strong>Semantic Containers:</strong> Using <code>&lt;div&gt;</code> elements to group related content. This allows developers to apply specific styling or behavior to a block of elements collectively.
+                    </td>
+                </tr>
+
+                <!-- CSS SECTION -->
+                <tr>
+                    <td colspan="2" class="section-divider">CSS STYLING</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="code-snippet">
+                            <span class="tag">.card</span> {<br>
+                            &nbsp;&nbsp;<span class="attr">display</span>: <span class="val">flex</span>;<br>
+                            &nbsp;&nbsp;<span class="attr">justify-content</span>: <span class="val">center</span>;<br>
+                            &nbsp;&nbsp;<span class="attr">align-items</span>: <span class="val">center</span>;<br>
+                            }
+                        </div>
+                    </td>
+                    <td class="description">
+                        <strong>Flexbox Layout:</strong> A powerful 1D layout model. Using <code>display: flex</code> allows for easy alignment and distribution of space among items within a container, even when their size is unknown.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="code-snippet">
+                            <span class="tag">@media</span> (<span class="attr">max-width</span>: <span class="val">768px</span>) {<br>
+                            &nbsp;&nbsp;<span class="tag">.nav</span> { <span class="attr">display</span>: <span class="val">none</span>; }<br>
+                            }
+                        </div>
+                    </td>
+                    <td class="description">
+                        <strong>Media Queries:</strong> The heart of responsive design. These allow you to apply different styles based on the device's screen size or resolution, ensuring your site looks great on phones, tablets, and desktops.
+                    </td>
+                </tr>
+
+                <!-- BOOTSTRAP SECTION -->
+                <tr>
+                    <td colspan="2" class="section-divider">BOOTSTRAP FRAMEWORK</td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="code-snippet">
+                            <span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"row"</span><span class="tag">&gt;</span><br>
+                            &nbsp;&nbsp;<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"col-md-6"</span><span class="tag">&gt;</span>Left<span class="tag">&lt;/div&gt;</span><br>
+                            &nbsp;&nbsp;<span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="val">"col-md-6"</span><span class="tag">&gt;</span>Right<span class="tag">&lt;/div&gt;</span><br>
+                            <span class="tag">&lt;/div&gt;</span>
+                        </div>
+                    </td>
+                    <td class="description">
+                        <strong>Grid System:</strong> Bootstrap's mobile-first flexbox grid. It uses a 12-column system. <code>col-md-6</code> means the element will take up 6 columns (50% width) on medium-sized screens and larger.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="code-snippet">
+                            <span class="tag">&lt;button</span> <span class="attr">class</span>=<span class="val">"btn btn-primary"</span><span class="tag">&gt;</span><br>
+                            &nbsp;&nbsp;Submit<br>
+                            <span class="tag">&lt;/button&gt;</span>
+                        </div>
+                    </td>
+                    <td class="description">
+                        <strong>Component Utility:</strong> Bootstrap provides pre-styled components. <code>btn</code> establishes the base button style, and <code>btn-primary</code> applies the primary theme color (usually blue) and hover effects.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer style="margin-top: 4rem; color: var(--text-secondary); font-size: 0.9rem;">
+        &copy; 2026 Web Dev Lab 01. Built with premium aesthetics.
+    </footer>
+</body>
+</html>
