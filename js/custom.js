@@ -1,6 +1,53 @@
 (function() {
 	'use strict';
 
+	var allProducts = [];
+	var searchDelay = null;
+
+	var normalizeText = function(value) {
+		return (value || '').toString().trim().toLowerCase();
+	};
+
+	var getProductCategory = function(product) {
+		var title = normalizeText(product.title);
+
+		if (/relax|lounge|comfort|recliner/.test(title)) {
+			return 'lounge';
+		}
+
+		if (/executive|task|mesh|aero|office/.test(title)) {
+			return 'office';
+		}
+
+		if (/dining|cushioned|classic|upholstered/.test(title)) {
+			return 'dining';
+		}
+
+		if (/oak|wood|wooden|nordic|scandi/.test(title)) {
+			return 'wooden';
+		}
+
+		if (/minimal|modern|studio|contemporary|accent/.test(title)) {
+			return 'modern';
+		}
+
+		return 'accent';
+	};
+
+	var getCategoryLabel = function(category) {
+		var labels = {
+			all: 'All categories',
+			wooden: 'Wooden',
+			office: 'Office',
+			lounge: 'Lounge',
+			modern: 'Modern',
+			dining: 'Dining',
+			accent: 'Accent'
+		};
+
+		return labels[category] || category;
+	};
+
 	var tinyslider = function() {
 		var el = document.querySelectorAll('.testimonial-slider');
 
@@ -69,7 +116,7 @@
 	};
 	sitePlusMinus();
 
-	var renderUI = function(products) {
+	var renderUI = function(products, emptyMessage) {
 		var productGrid = document.getElementById('product-grid');
 
 		if (!productGrid) {
@@ -78,6 +125,14 @@
 
 		// Clear the placeholder content first so the JSON data becomes the single source of truth.
 		productGrid.innerHTML = '';
+
+		if (!products.length) {
+			var emptyState = document.createElement('div');
+			emptyState.className = 'col-12';
+			emptyState.innerHTML = '<div class="alert alert-light text-center mb-0 border">' + (emptyMessage || 'No matching products found.') + '</div>';
+			productGrid.appendChild(emptyState);
+			return;
+		}
 
 		// Each object in the JSON array becomes one Bootstrap column containing one product card.
 		products.forEach(function(product) {
@@ -119,6 +174,57 @@
 		});
 	};
 
+	var renderFilteredProducts = function() {
+		var searchInput = document.getElementById('search-input');
+		var categorySelect = document.getElementById('category-select');
+
+		if (!allProducts.length || !searchInput || !categorySelect) {
+			return;
+		}
+
+		var keyword = normalizeText(searchInput.value);
+		var category = categorySelect.value || 'all';
+
+		if (!keyword && category === 'all') {
+			renderUI(allProducts);
+			return;
+		}
+
+		var filteredProducts = allProducts.filter(function(product) {
+			var title = normalizeText(product.title);
+			var productCategory = getProductCategory(product);
+			var keywordMatches = !keyword || title.indexOf(keyword) !== -1 || getCategoryLabel(productCategory).toLowerCase().indexOf(keyword) !== -1;
+			var categoryMatches = category === 'all' || productCategory === category;
+
+			return keywordMatches && categoryMatches;
+		});
+
+		renderUI(filteredProducts, 'No matching products found.');
+	};
+
+	var bindFilterControls = function() {
+		var searchInput = document.getElementById('search-input');
+		var categorySelect = document.getElementById('category-select');
+		var resetButton = document.getElementById('reset-filters');
+
+		if (!searchInput || !categorySelect || !resetButton) {
+			return;
+		}
+
+		searchInput.addEventListener('input', function() {
+			window.clearTimeout(searchDelay);
+			searchDelay = window.setTimeout(renderFilteredProducts, 1000);
+		});
+		categorySelect.addEventListener('change', renderFilteredProducts);
+		resetButton.addEventListener('click', function() {
+			window.clearTimeout(searchDelay);
+			searchInput.value = '';
+			categorySelect.value = 'all';
+			renderFilteredProducts();
+			searchInput.focus();
+		});
+	};
+
 	var requestProducts = function() {
 		var productsPath = 'data/products.json';
 
@@ -134,7 +240,9 @@
 				return response.json();
 			})
 			.then(function(products) {
-				renderUI(products);
+				allProducts = products;
+				bindFilterControls();
+				renderFilteredProducts();
 			})
 			.catch(function() {
 				var productGrid = document.getElementById('product-grid');

@@ -199,6 +199,27 @@ a {
 
 .product-section {
   padding: 7rem 0; }
+  .product-section .shop-filters {
+    background: #ffffff;
+    border: 1px solid rgba(59, 93, 80, 0.12);
+    border-radius: 20px;
+    padding: 1.5rem;
+  }
+  .product-section .shop-filters .form-label {
+    color: #2f2f2f;
+    margin-bottom: 0.5rem;
+  }
+  .product-section .shop-filters .form-control,
+  .product-section .shop-filters .form-select {
+    min-height: 48px;
+    border-radius: 12px;
+    border-color: rgba(59, 93, 80, 0.18);
+  }
+  .product-section .shop-filters .form-control:focus,
+  .product-section .shop-filters .form-select:focus {
+    border-color: #3b5d50;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(59, 93, 80, 0.12);
+    box-shadow: 0 0 0 0.2rem rgba(59, 93, 80, 0.12); }
   .product-section .product-item {
     text-align: center;
     text-decoration: none;

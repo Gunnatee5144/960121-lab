@@ -79,6 +79,34 @@
 
 		<div class="untree_co-section product-section before-footer-section">
 		    <div class="container">
+			    <div class="row justify-content-center mb-5">
+			    	<div class="col-lg-10">
+			    		<div class="shop-filters shadow-sm">
+			    			<div class="row g-3 align-items-end">
+			    				<div class="col-lg-6">
+			    					<label for="search-input" class="form-label fw-semibold">Search product</label>
+			    					<input id="search-input" type="search" class="form-control" placeholder="Search by keyword, e.g. chair, mesh, lounge">
+			    				</div>
+			    				<div class="col-lg-4">
+			    					<label for="category-select" class="form-label fw-semibold">Category</label>
+			    					<select id="category-select" class="form-select">
+			    						<option value="all" selected>All categories</option>
+			    						<option value="wooden">Wooden</option>
+			    						<option value="office">Office</option>
+			    						<option value="lounge">Lounge</option>
+			    						<option value="modern">Modern</option>
+			    						<option value="dining">Dining</option>
+			    						<option value="accent">Accent</option>
+			    					</select>
+			    				</div>
+			    				<div class="col-lg-2 d-grid">
+			    					<button id="reset-filters" type="button" class="btn btn-outline-dark">Reset</button>
+			    				</div>
+			    			</div>
+			    		</div>
+			    	</div>
+			    </div>
+
 		      	<div class="row" id="product-grid" aria-live="polite">
 					<div class="col-12">
 						<p class="text-center mb-0">Loading products...</p>

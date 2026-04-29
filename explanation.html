@@ -18,6 +18,63 @@
         <p class="subtitle">Mastering the foundation of modern web design: HTML, CSS, and Bootstrap.</p>
     </header>
 
+    <section class="uml-panel" aria-labelledby="uml-title">
+        <div class="uml-panel-header">
+            <p class="uml-kicker">UML Activity Diagram</p>
+            <h2 id="uml-title">Search a product or choose a category</h2>
+            <p class="uml-lead">This flow matches a shop page where the user types a keyword, selects a category, or clears both inputs.</p>
+        </div>
+
+        <div class="activity-flow" role="img" aria-label="Activity diagram for searching products and filtering by category">
+            <div class="flow-node start-node">Start</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node action-node">User Action<br><span>type search / select category</span></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node action-node">Capture Input<br><span>read keyword and category</span></div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node decision-node">Search empty and no category selected?</div>
+            <div class="decision-branches">
+                <div class="branch yes-branch">
+                    <div class="branch-label yes">Yes</div>
+                    <div class="flow-node action-node">Show all products<br><span>default state</span></div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-node action-node">Update DOM</div>
+                </div>
+                <div class="branch no-branch">
+                    <div class="branch-label no">No</div>
+                    <div class="flow-node action-node">Filter Array<br><span>match keyword and/or category</span></div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-node decision-node small">Any results found?</div>
+                    <div class="decision-branches nested">
+                        <div class="branch yes-branch">
+                            <div class="branch-label yes">Yes</div>
+                            <div class="flow-node action-node">Render matching products</div>
+                            <div class="flow-arrow">↓</div>
+                            <div class="flow-node action-node">Update DOM</div>
+                        </div>
+                        <div class="branch no-branch">
+                            <div class="branch-label no">No</div>
+                            <div class="flow-node action-node empty-state">Show empty state<br><span>No matching products found</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flow-arrow end-arrow">↓</div>
+            <div class="flow-node end-node">End</div>
+        </div>
+
+        <div class="uml-notes">
+            <div class="note-card">
+                <h3>If the search box is empty and no category is selected</h3>
+                <p>Show the full product list. That is the default state, so the page should render all products instead of filtering them away.</p>
+            </div>
+            <div class="note-card">
+                <h3>If the search returns no results</h3>
+                <p>Show a clear empty-state message such as <strong>No matching products found</strong> so the user understands the filter worked but nothing matched.</p>
+            </div>
+        </div>
+    </section>
+
     <main class="table-container">
         <table>
             <thead>
