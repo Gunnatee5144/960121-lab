@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Development Structures - HTML, CSS, & Bootstrap</title>
-    <meta name="description" content="A comprehensive guide to HTML, CSS, and Bootstrap structures with code examples and detailed explanations.">
+    <title>Add to Cart Activity Diagram</title>
+    <meta name="description" content="An activity diagram showing the add-to-cart logic for handling duplicate products and quantity updates.">
     <link rel="stylesheet" href="explanation.css">
 </head>
 <body>
@@ -15,62 +15,56 @@
 
     <header>
         <h1>Web Structures</h1>
-        <p class="subtitle">Mastering the foundation of modern web design: HTML, CSS, and Bootstrap.</p>
+        <p class="subtitle">A focused UML activity flow for the add-to-cart decision logic.</p>
     </header>
 
     <section class="uml-panel" aria-labelledby="uml-title">
         <div class="uml-panel-header">
             <p class="uml-kicker">UML Activity Diagram</p>
-            <h2 id="uml-title">Search a product or choose a category</h2>
-            <p class="uml-lead">This flow matches a shop page where the user types a keyword, selects a category, or clears both inputs.</p>
+            <h2 id="uml-title">The "Add to Cart" Logic</h2>
+            <p class="uml-lead">This flow shows what happens when a user adds the same product more than once: either increase quantity or create a new cart item.</p>
         </div>
 
-        <div class="activity-flow" role="img" aria-label="Activity diagram for searching products and filtering by category">
+        <div class="activity-flow" role="img" aria-label="Activity diagram for add-to-cart logic with duplicate product handling">
             <div class="flow-node start-node">Start</div>
             <div class="flow-arrow">↓</div>
-            <div class="flow-node action-node">User Action<br><span>type search / select category</span></div>
+            <div class="flow-node action-node">User Action<br><span>click Add to Cart for a product</span></div>
             <div class="flow-arrow">↓</div>
-            <div class="flow-node action-node">Capture Input<br><span>read keyword and category</span></div>
+            <div class="flow-node action-node">Capture Product ID<br><span>read the selected productID</span></div>
             <div class="flow-arrow">↓</div>
-            <div class="flow-node decision-node">Search empty and no category selected?</div>
+            <div class="flow-node decision-node"><span>Does this ID already exist in the cart array?</span></div>
             <div class="decision-branches">
                 <div class="branch yes-branch">
                     <div class="branch-label yes">Yes</div>
-                    <div class="flow-node action-node">Show all products<br><span>default state</span></div>
+                    <div class="flow-node action-node">Find matching cart item<br><span>locate the existing product record</span></div>
                     <div class="flow-arrow">↓</div>
-                    <div class="flow-node action-node">Update DOM</div>
+                    <div class="flow-node action-node">Increment quantity<br><span>add 1 to the current amount</span></div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-node action-node">Update cart totals<br><span>recalculate subtotal and badge count</span></div>
                 </div>
                 <div class="branch no-branch">
                     <div class="branch-label no">No</div>
-                    <div class="flow-node action-node">Filter Array<br><span>match keyword and/or category</span></div>
+                    <div class="flow-node action-node">Create new cart object<br><span>copy product data into a new item</span></div>
                     <div class="flow-arrow">↓</div>
-                    <div class="flow-node decision-node small">Any results found?</div>
-                    <div class="decision-branches nested">
-                        <div class="branch yes-branch">
-                            <div class="branch-label yes">Yes</div>
-                            <div class="flow-node action-node">Render matching products</div>
-                            <div class="flow-arrow">↓</div>
-                            <div class="flow-node action-node">Update DOM</div>
-                        </div>
-                        <div class="branch no-branch">
-                            <div class="branch-label no">No</div>
-                            <div class="flow-node action-node empty-state">Show empty state<br><span>No matching products found</span></div>
-                        </div>
-                    </div>
+                    <div class="flow-node action-node">Set quantity = 1<br><span>first time the product is added</span></div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-node action-node">Push to cart array<br><span>append the new item to the cart</span></div>
                 </div>
             </div>
+            <div class="flow-arrow end-arrow">↓</div>
+            <div class="flow-node action-node">Sync cart UI<br><span>refresh totals, badges, and saved state</span></div>
             <div class="flow-arrow end-arrow">↓</div>
             <div class="flow-node end-node">End</div>
         </div>
 
         <div class="uml-notes">
             <div class="note-card">
-                <h3>If the search box is empty and no category is selected</h3>
-                <p>Show the full product list. That is the default state, so the page should render all products instead of filtering them away.</p>
+                <h3>If the product already exists in the cart</h3>
+                <p>Do not duplicate the item. Find the existing entry and increase its <strong>quantity</strong> so the cart stays clean and accurate.</p>
             </div>
             <div class="note-card">
-                <h3>If the search returns no results</h3>
-                <p>Show a clear empty-state message such as <strong>No matching products found</strong> so the user understands the filter worked but nothing matched.</p>
+                <h3>If the product is new</h3>
+                <p>Create a fresh object for that product, assign <strong>quantity = 1</strong>, and push it into the cart array before updating the UI.</p>
             </div>
         </div>
     </section>

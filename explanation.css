@@ -241,9 +241,35 @@ tr:hover {
 }
 
 .decision-node {
+    position: relative;
     min-width: min(100%, 420px);
-    background: linear-gradient(135deg, rgba(251, 191, 36, 0.14), rgba(244, 114, 182, 0.12));
-    border-color: rgba(251, 191, 36, 0.35);
+    min-height: 150px;
+    padding: 2.5rem 2rem;
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    isolation: isolate;
+}
+
+.decision-node::before {
+    content: '';
+    position: absolute;
+    inset: 0.5rem 0;
+    border: 1px solid rgba(251, 191, 36, 0.38);
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.16), rgba(244, 114, 182, 0.14));
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0 50%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    z-index: 0;
+}
+
+.decision-node span {
+    position: relative;
+    z-index: 1;
+    display: block;
+    margin-top: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
 }
 
 .decision-node.small {
