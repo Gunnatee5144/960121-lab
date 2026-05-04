@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 
 const productRoutes = require('./routes/products');
+const loginRoutes = require('./routes/login');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -28,6 +29,7 @@ app.use('/images', express.static(path.join(rootDir, 'images')));
 app.use('/data', express.static(path.join(rootDir, 'data')));
 
 app.use('/api/products', productRoutes);
+app.use('/api/login', loginRoutes);
 
 app.get('/', function(_request, response) {
   response.sendFile(path.join(rootDir, 'index.html'));

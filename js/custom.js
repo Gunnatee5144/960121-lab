@@ -502,18 +502,21 @@
 		});
 	};
 
-	var requestProducts = function(category) {
+	var buildProductsPath = function(category, useApi) {
 		var normalizedCategory = normalizeText(category || 'all');
-		var productsPath = '/api/products';
+		var productsPath = useApi ? '/api/products' : 'data/products.json';
 
-		if (normalizedCategory && normalizedCategory !== 'all') {
+		if (useApi && normalizedCategory && normalizedCategory !== 'all') {
 			productsPath += '?category=' + encodeURIComponent(normalizedCategory);
 		}
 
-		// This function represents the network request step in the sequence diagram.
-		// It asks the Express route for the current category, converts the response
-		// into JavaScript objects, and then passes those objects to the rendering flow.
-		fetch(productsPath)
+		return productsPath;
+	};
+
+	var loadProductsFromPath = function(category, productsPath, fallbackPath) {
+		// Try the requested source first, then fall back to the static JSON file
+		// if the browser is opened outside the Express server.
+		return fetch(productsPath)
 			.then(function(response) {
 				if (!response.ok) {
 					throw new Error('Failed to load products.');
@@ -521,6 +524,30 @@
 
 				return response.json();
 			})
+			.catch(function(error) {
+				if (!fallbackPath || fallbackPath === productsPath) {
+					throw error;
+				}
+
+				return fetch(fallbackPath).then(function(response) {
+					if (!response.ok) {
+						throw error;
+					}
+
+					return response.json();
+				});
+			});
+	};
+
+	var requestProducts = function(category) {
+		var useApi = window.location.protocol !== 'file:';
+		var productsPath = buildProductsPath(category, useApi);
+		var fallbackPath = buildProductsPath(category, !useApi);
+
+		// This function represents the network request step in the sequence diagram.
+		// It asks the Express route for the current category, converts the response
+		// into JavaScript objects, and then passes those objects to the rendering flow.
+		loadProductsFromPath(category, productsPath, fallbackPath)
 			.then(function(products) {
 				allProducts = products;
 				if (!filtersBound) {
