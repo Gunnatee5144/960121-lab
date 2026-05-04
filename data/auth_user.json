@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "username": "alice.wong@example.com",
+    "password": "$2b$10$ZKUtFUpGYtoZbDwpKihIJOvaNWrFCkRs3GeLLwPdVE3su29HaKBHq",
+    "firstName": "Alice",
+    "registeredAt": "2026-05-01"
+  },
+  {
+    "id": 2,
+    "username": "ben.carter@example.com",
+    "password": "$2b$10$Z9cE66NWV/SdPNBbY/2EWOt1.KZvLFFz.n4Y35Pr4AwfDGqU4Vu7i",
+    "firstName": "Ben",
+    "registeredAt": "2026-05-02"
+  },
+  {
+    "id": 3,
+    "username": "chloe.park@example.com",
+    "password": "$2b$10$RDT5I2Ax5VC0dWAmV6fP2ORX.BHLx/3CKkXHKal8yxjfIj/BNEcQm",
+    "firstName": "Chloe",
+    "registeredAt": "2026-05-03"
+  },
+  {
+    "id": 4,
+    "username": "daniel.ross@example.com",
+    "password": "$2b$10$V6cLgvRpXaAKAFc9Cb8ZVeSJGItPiV5LIReOyVIPk4ybkL0WlPBzu",
+    "firstName": "Daniel",
+    "registeredAt": "2026-05-04"
+  },
+  {
+    "id": 5,
+    "username": "emma.jones@example.com",
+    "password": "$2b$10$wIwDzEhO5KDVnLrkUFdYW.o6ZDCJiAjjKmNhO/.DK.p3WMFHLG6rC",
+    "firstName": "Emma",
+    "registeredAt": "2026-05-05"
+  },
+  {
+    "id": 6,
+    "username": "farah.khan@example.com",
+    "password": "$2b$10$i4ajRUgGn0nkubKieU8hleJ3qw2QujeRp1M.oIfn8XUP9D2B3FcdO",
+    "firstName": "Farah",
+    "registeredAt": "2026-05-06"
+  },
+  {
+    "id": 7,
+    "username": "george.lee@example.com",
+    "password": "$2b$10$q2qxrdSCVzaUpJGoYDV3GeWMcMdNtSCzX3WbfFpthtgR5qPW3ZAJ2",
+    "firstName": "George",
+    "registeredAt": "2026-05-07"
+  },
+  {
+    "id": 8,
+    "username": "hannah.martin@example.com",
+    "password": "$2b$10$9lZ5uJq.7VlBq6QPfQMPKetlKykCBGS9pPURU3Li0a5l8HG2928mu",
+    "firstName": "Hannah",
+    "registeredAt": "2026-05-08"
+  },
+  {
+    "id": 9,
+    "username": "ivan.petrov@example.com",
+    "password": "$2b$10$Hp8ljRXaVn0PK6baYhCBj..zVKLFUGIC5wjTrg29BKM5mG2l.SSXu",
+    "firstName": "Ivan",
+    "registeredAt": "2026-05-09"
+  },
+  {
+    "id": 10,
+    "username": "julia.nguyen@example.com",
+    "password": "$2b$10$LWhdSm5X7UtE1suEceW7KuVDCVvNJv7CsMDwMN3v7Tgvtg5.mHOXe",
+    "firstName": "Julia",
+    "registeredAt": "2026-05-10"
+  }
+]
