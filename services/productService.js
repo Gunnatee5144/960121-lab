@@ -1,7 +1,9 @@
 const productsStore = require('../data/productsStore');
 
-function getAllProducts() {
-  return productsStore.getAllProducts();
+function getAllProducts(category) {
+  // Pass the category filter through so the data layer can return only the
+  // products requested by the browser.
+  return productsStore.getAllProducts(category);
 }
 
 function getProductById(id) {

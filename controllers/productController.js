@@ -2,7 +2,11 @@ const productService = require('../services/productService');
 
 function getProducts(request, response) {
   try {
-    const products = productService.getAllProducts();
+    const category = request.query.category;
+    const products = productService.getAllProducts(category);
+
+    // Return the JSON package the browser asked for, optionally narrowed by
+    // the query parameter it sent on the request envelope.
     response.json(products);
   } catch (error) {
     response.status(500).json({ message: 'Error retrieving products' });

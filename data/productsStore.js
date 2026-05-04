@@ -3,6 +3,36 @@ const path = require('path');
 
 const productsFilePath = path.join(__dirname, 'products.json');
 
+function normalizeCategory(value) {
+  return String(value || '').trim().toLowerCase();
+}
+
+function getProductCategory(product) {
+  const title = normalizeCategory(product && product.title);
+
+  if (/relax|lounge|comfort|recliner/.test(title)) {
+    return 'lounge';
+  }
+
+  if (/executive|task|mesh|aero|office/.test(title)) {
+    return 'office';
+  }
+
+  if (/dining|cushioned|classic|upholstered/.test(title)) {
+    return 'dining';
+  }
+
+  if (/oak|wood|wooden|nordic|scandi/.test(title)) {
+    return 'wooden';
+  }
+
+  if (/minimal|modern|studio|contemporary|accent/.test(title)) {
+    return 'modern';
+  }
+
+  return 'accent';
+}
+
 function loadProducts() {
   const fileContents = fs.readFileSync(productsFilePath, 'utf8');
   const parsedProducts = JSON.parse(fileContents);
@@ -36,8 +66,15 @@ function getNextProductId() {
   }, 1);
 }
 
-function getAllProducts() {
-  return products.map(cloneProduct);
+function getAllProducts(category) {
+  const normalizedCategory = normalizeCategory(category);
+  const visibleProducts = normalizedCategory && normalizedCategory !== 'all'
+    ? products.filter(function(product) {
+        return getProductCategory(product) === normalizedCategory;
+      })
+    : products;
+
+  return visibleProducts.map(cloneProduct);
 }
 
 function getProductById(id) {

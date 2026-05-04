@@ -3,6 +3,9 @@
 
 	var allProducts = [];
 	var searchDelay = null;
+	var filtersBound = false;
+	var catalogBound = false;
+	var cartBound = false;
 	var CART_STORAGE_KEY = 'furni-cart';
 
 	var loadCart = function() {
@@ -486,22 +489,30 @@
 			window.clearTimeout(searchDelay);
 			searchDelay = window.setTimeout(renderFilteredProducts, 1000);
 		});
-		categorySelect.addEventListener('change', renderFilteredProducts);
+		categorySelect.addEventListener('change', function() {
+			window.clearTimeout(searchDelay);
+			requestProducts(categorySelect.value);
+		});
 		resetButton.addEventListener('click', function() {
 			window.clearTimeout(searchDelay);
 			searchInput.value = '';
 			categorySelect.value = 'all';
-			renderFilteredProducts();
+			requestProducts('all');
 			searchInput.focus();
 		});
 	};
 
-	var requestProducts = function() {
-		var productsPath = 'data/products.json';
+	var requestProducts = function(category) {
+		var normalizedCategory = normalizeText(category || 'all');
+		var productsPath = '/api/products';
+
+		if (normalizedCategory && normalizedCategory !== 'all') {
+			productsPath += '?category=' + encodeURIComponent(normalizedCategory);
+		}
 
 		// This function represents the network request step in the sequence diagram.
-		// It asks for the JSON file, converts the response into JavaScript objects,
-		// and then passes those objects to the rendering function.
+		// It asks the Express route for the current category, converts the response
+		// into JavaScript objects, and then passes those objects to the rendering flow.
 		fetch(productsPath)
 			.then(function(response) {
 				if (!response.ok) {
@@ -512,9 +523,18 @@
 			})
 			.then(function(products) {
 				allProducts = products;
-				bindFilterControls();
-				bindCatalogEvents();
-				bindCartEvents();
+				if (!filtersBound) {
+					bindFilterControls();
+					filtersBound = true;
+				}
+				if (!catalogBound) {
+					bindCatalogEvents();
+					catalogBound = true;
+				}
+				if (!cartBound) {
+					bindCartEvents();
+					cartBound = true;
+				}
 				renderFilteredProducts();
 				renderCartPage();
 				updateCartBadge();
@@ -529,9 +549,9 @@
 	};
 
 	// Start the product loading flow when this script runs.
-	// requestProducts() is the entry point, fetch() gets the JSON data,
+	// requestProducts() is the entry point, fetch() calls the Express API,
 	// and renderUI() converts that data into visible product cards.
-	requestProducts();
+	requestProducts('all');
 
 
 })()
