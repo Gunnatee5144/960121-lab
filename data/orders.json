@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "email": "gunnatee5144@hotmail.com",
+    "cardLast4": "1234",
+    "items": [
+      {
+        "productId": "3",
+        "title": "Kruzo Aero Chair",
+        "price": 78,
+        "quantity": 1
+      }
+    ],
+    "total": 78,
+    "createdAt": "2026-05-05T03:32:36.217Z"
+  }
+]

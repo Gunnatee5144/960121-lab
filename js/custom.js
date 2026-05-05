@@ -6,6 +6,7 @@
 	var filtersBound = false;
 	var catalogBound = false;
 	var cartBound = false;
+	var checkoutBound = false;
 	var CART_STORAGE_KEY = 'furni-cart';
 
 	var loadCart = function() {
@@ -143,6 +144,129 @@
 			badge.classList.add('is-hidden');
 		}
 	};
+
+	var clearCart = function() {
+		cart = {};
+		window.cart = cart;
+		saveCart();
+		updateCartBadge();
+		renderCartPage();
+	};
+
+	var getCheckoutCartItems = function() {
+		return Object.keys(cart).map(function(productId) {
+			var quantity = parseInt(cart[productId], 10);
+
+			if (!productId || isNaN(quantity) || quantity <= 0) {
+				return null;
+			}
+
+			return {
+				productId: String(productId),
+				quantity: quantity
+			};
+		}).filter(function(item) {
+			return item !== null;
+		});
+	};
+
+	var renderCheckoutFeedback = function(type, messages) {
+		var feedback = document.getElementById('checkout-feedback');
+		var list = Array.isArray(messages) ? messages : [messages];
+
+		if (!feedback) {
+			return;
+		}
+
+		if (!list.length || !list[0]) {
+			feedback.innerHTML = '';
+			return;
+		}
+
+		feedback.innerHTML = [
+			'<div class="alert alert-' + type + ' mb-0">',
+			'  <ul class="mb-0 ps-3">',
+				list.map(function(message) {
+					return '<li>' + String(message) + '</li>';
+				}).join(''),
+			'  </ul>',
+			'</div>'
+		].join('');
+	};
+
+	var handleCheckoutSubmit = function(event) {
+		var emailField = document.getElementById('c_email_address');
+		var cardField = document.getElementById('c_card_number');
+		var cartItems = getCheckoutCartItems();
+
+		if (!emailField || !cardField) {
+			return;
+		}
+
+		event.preventDefault();
+
+		if (!cartItems.length) {
+			renderCheckoutFeedback('danger', ['Your cart is empty.']);
+			return;
+		}
+
+		renderCheckoutFeedback('info', ['Saving your order...']);
+
+		fetch('/api/checkout', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				email: emailField.value,
+				cardNumber: cardField.value,
+				cartItems: cartItems
+			})
+		})
+		.then(function(response) {
+			return response.json().then(function(payload) {
+				return {
+					ok: response.ok,
+					status: response.status,
+					payload: payload
+				};
+			});
+		})
+		.then(function(result) {
+			if (!result.ok) {
+				var errorMessages = result.payload && result.payload.errors ? Object.keys(result.payload.errors).map(function(key) {
+					return result.payload.errors[key];
+				}) : [result.payload && result.payload.message ? result.payload.message : 'Unable to save order.'];
+
+				renderCheckoutFeedback('danger', errorMessages);
+				return;
+			}
+
+			clearCart();
+			renderCheckoutFeedback('success', ['Order saved successfully. Redirecting to the thank you page...']);
+			window.setTimeout(function() {
+				window.location.href = 'thankyou.html';
+			}, 700);
+		})
+		.catch(function() {
+			renderCheckoutFeedback('danger', ['Unable to save order. Please try again.']);
+		});
+	};
+
+	var bindCheckoutEvents = function() {
+		var checkoutButton = document.getElementById('checkout-submit');
+
+		if (!checkoutButton) {
+			return;
+		}
+
+		checkoutButton.addEventListener('click', handleCheckoutSubmit);
+	};
+
+	if (!checkoutBound) {
+		bindCheckoutEvents();
+		checkoutBound = true;
+	}
 
 	updateCartBadge();
 
@@ -561,6 +685,10 @@
 				if (!cartBound) {
 					bindCartEvents();
 					cartBound = true;
+				}
+				if (!checkoutBound) {
+					bindCheckoutEvents();
+					checkoutBound = true;
 				}
 				renderFilteredProducts();
 				renderCartPage();

@@ -4,6 +4,7 @@ const path = require('path');
 const productRoutes = require('./routes/products');
 const loginRoutes = require('./routes/login');
 const registerRoutes = require('./routes/register');
+const checkoutRoutes = require('./routes/checkout');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -33,6 +34,7 @@ app.use('/data', express.static(path.join(rootDir, 'data')));
 app.use('/api/products', productRoutes);
 app.use('/api/login', loginRoutes);
 app.use('/api/register', registerRoutes);
+app.use('/api/checkout', checkoutRoutes);
 
 app.get('/', function(_request, response) {
   response.sendFile(path.join(rootDir, 'index.html'));
