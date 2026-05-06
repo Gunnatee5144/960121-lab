@@ -56,7 +56,7 @@ function calculateTotal(cartItems) {
   }, 0);
 }
 
-function saveOrder(data) {
+async function saveOrder(data) {
   const normalizedEmail = normalizeEmail(data.email);
   const cardNumber = normalizeCardNumber(data.cardNumber);
   const normalizedCartItems = normalizeCartItems(data.cartItems);
@@ -85,7 +85,8 @@ function saveOrder(data) {
   const total = calculateTotal(normalizedCartItems.items);
 
   try {
-    const savedOrder = orderStore.createOrder({
+    const savedOrder = await orderStore.createOrder({
+      userId: data.userId,
       email: normalizedEmail,
       cardLast4: cardNumber.slice(-4),
       items: normalizedCartItems.items,

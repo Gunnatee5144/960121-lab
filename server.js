@@ -5,6 +5,7 @@ const productRoutes = require('./routes/products');
 const loginRoutes = require('./routes/login');
 const registerRoutes = require('./routes/register');
 const checkoutRoutes = require('./routes/checkout');
+const database = require('./data/database');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -50,6 +51,17 @@ app.use(function(_request, response) {
   response.status(404).json({ message: 'Route not found' });
 });
 
-app.listen(port, function() {
-  console.log('Express server running on http://localhost:' + port);
-});
+async function startServer() {
+  try {
+    await database.initializeDatabase();
+
+    app.listen(port, function() {
+      console.log('Express server running on http://localhost:' + port);
+    });
+  } catch (error) {
+    console.error('Failed to initialize SQLite database:', error.message);
+    process.exit(1);
+  }
+}
+
+startServer();

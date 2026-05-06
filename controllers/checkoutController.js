@@ -1,8 +1,8 @@
 const checkoutService = require('../services/checkoutService');
 
-function checkout(request, response) {
+async function checkout(request, response) {
   try {
-    const result = checkoutService.saveOrder(request.body || {});
+    const result = await checkoutService.saveOrder(request.body || {});
 
     if (result.status === 201) {
       return response.status(201).json({

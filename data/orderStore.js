@@ -1,64 +1,67 @@
-const fs = require('fs');
-const path = require('path');
+const database = require('./database');
 
-const ordersFilePath = path.join(__dirname, 'orders.json');
+function toNumber(value) {
+  const parsedValue = Number(value);
 
-function loadOrders() {
-  if (!fs.existsSync(ordersFilePath)) {
-    return [];
-  }
-
-  const fileContents = fs.readFileSync(ordersFilePath, 'utf8');
-
-  if (!fileContents.trim()) {
-    return [];
-  }
-
-  const parsedOrders = JSON.parse(fileContents);
-
-  if (!Array.isArray(parsedOrders)) {
-    throw new Error('orders.json must contain an array of orders');
-  }
-
-  return parsedOrders;
+  return Number.isFinite(parsedValue) ? parsedValue : null;
 }
 
-let orders = loadOrders();
+function buildOrderRows(data) {
+  if (Array.isArray(data && data.items) && data.items.length > 0) {
+    return data.items.map(function(item) {
+      const quantity = toNumber(item && item.quantity) || 1;
+      const price = toNumber(item && item.price) || 0;
 
-function cloneOrder(order) {
-  return JSON.parse(JSON.stringify(order));
-}
+      return {
+        userId: toNumber(data && data.userId),
+        productId: toNumber(item && item.productId),
+        quantity: quantity,
+        totalPrice: Number((price * quantity).toFixed(2))
+      };
+    });
+  }
 
-function getNextOrderId() {
-  return orders.reduce(function(nextId, order) {
-    const orderId = Number(order.id);
-
-    if (Number.isNaN(orderId)) {
-      return nextId;
-    }
-
-    return Math.max(nextId, orderId + 1);
-  }, 1);
-}
-
-function saveOrders() {
-  fs.writeFileSync(ordersFilePath, JSON.stringify(orders, null, 2));
+  return [{
+    userId: toNumber(data && data.userId),
+    productId: toNumber(data && data.productId),
+    quantity: toNumber(data && data.quantity) || 1,
+    totalPrice: Number(toNumber(data && data.totalPrice) || 0)
+  }];
 }
 
 function createOrder(data) {
-  const newOrder = {
-    id: getNextOrderId(),
-    email: String(data && data.email || '').trim().toLowerCase(),
-    cardLast4: String(data && data.cardLast4 || '').trim(),
-    items: Array.isArray(data && data.items) ? data.items.map(cloneOrder) : [],
-    total: Number(data && data.total) || 0,
-    createdAt: data && data.createdAt ? String(data.createdAt) : new Date().toISOString()
-  };
+  const orderRows = buildOrderRows(data).filter(function(row) {
+    return row.productId !== null;
+  });
 
-  orders.push(newOrder);
-  saveOrders();
+  if (!orderRows.length) {
+    return Promise.reject(new Error('An order must include at least one product_id.'));
+  }
 
-  return cloneOrder(newOrder);
+  const insertSql = 'INSERT INTO orders (user_id, product_id, quantity, total_price) VALUES (?, ?, ?, ?)';
+
+  return orderRows.reduce(function(chain, orderRow) {
+    return chain.then(function(savedRows) {
+      return database.run(insertSql, [
+        orderRow.userId,
+        orderRow.productId,
+        orderRow.quantity,
+        orderRow.totalPrice
+      ]).then(function(result) {
+        savedRows.push({
+          id: result.id,
+          userId: orderRow.userId,
+          productId: orderRow.productId,
+          quantity: orderRow.quantity,
+          totalPrice: orderRow.totalPrice
+        });
+
+        return savedRows;
+      });
+    });
+  }, Promise.resolve([])).then(function(savedRows) {
+    return savedRows.length === 1 ? savedRows[0] : savedRows;
+  });
 }
 
 module.exports = {
