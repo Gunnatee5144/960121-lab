@@ -1,4 +1,4 @@
-const orderStore = require('../data/orderStore');
+const orderRepository = require('../repositories/orderRepository');
 const productService = require('./productService');
 
 function normalizeEmail(value) {
@@ -85,13 +85,20 @@ async function saveOrder(data) {
   const total = calculateTotal(normalizedCartItems.items);
 
   try {
-    const savedOrder = await orderStore.createOrder({
-      userId: data.userId,
-      email: normalizedEmail,
-      cardLast4: cardNumber.slice(-4),
-      items: normalizedCartItems.items,
-      total: Number(total.toFixed(2)),
-      createdAt: new Date().toISOString()
+    const savedOrder = await normalizedCartItems.items.reduce(function(chain, item) {
+      return chain.then(function(savedRows) {
+        return orderRepository.createOrder({
+          userId: data.userId,
+          productId: item.productId,
+          quantity: item.quantity,
+          totalPrice: Number((Number(item.price) * Number(item.quantity)).toFixed(2))
+        }).then(function(savedOrderRow) {
+          savedRows.push(savedOrderRow);
+          return savedRows;
+        });
+      });
+    }, Promise.resolve([])).then(function(savedRows) {
+      return savedRows.length === 1 ? savedRows[0] : savedRows;
     });
 
     return {

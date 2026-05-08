@@ -1,16 +1,16 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const userStore = require('../data/userStore');
+const userRepository = require('../repositories/userRepository');
 
 function login(email, password) {
-  const user = userStore.getUserByEmail(email);
+  if (!password) {
+    return { status: 400, message: 'Email and password are required' };
+  }
+
+  const user = userRepository.getUserByEmail(email);
 
   if (!user) {
     return { status: 401, message: 'Unauthorized' };
-  }
-
-  if (!password) {
-    return { status: 400, message: 'Email and password are required' };
   }
 
   const passwordMatches = bcrypt.compareSync(String(password), String(user.password));

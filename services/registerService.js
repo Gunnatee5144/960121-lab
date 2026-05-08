@@ -1,4 +1,5 @@
-const userStore = require('../data/userStore');
+const bcrypt = require('bcrypt');
+const userRepository = require('../repositories/userRepository');
 
 function isPasswordValid(password) {
   const value = String(password || '');
@@ -25,14 +26,15 @@ function registerUser(data) {
     };
   }
 
-  if (userStore.isUsernameTaken(username)) {
+  if (userRepository.isUsernameTaken(username)) {
     return { status: 409, message: 'Username already exists' };
   }
 
-  const createdUser = userStore.createUser({
+  const hashedPassword = bcrypt.hashSync(password, 10);
+  const createdUser = userRepository.createUser({
     firstName: firstName,
     username: username,
-    password: password
+    password: hashedPassword
   });
 
   if (!createdUser) {
