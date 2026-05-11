@@ -1,7 +1,7 @@
 const path = require('path');
 const { DatabaseSync } = require('node:sqlite');
 
-const databasePath = path.join(__dirname, '..', 'store.db');
+const databasePath = process.env.SQLITE_DB_PATH || path.join(__dirname, '..', 'store.db');
 const database = new DatabaseSync(databasePath);
 
 function initializeDatabase() {
